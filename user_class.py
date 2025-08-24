@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from symptom_class import Symptom
 
 class User:
@@ -7,7 +8,7 @@ class User:
         '''
         instantiation for User class
 
-        paramters
+        parameters
         ----------
         name : str
             User's name
@@ -32,7 +33,7 @@ class User:
         
     def pull_data(self, datapath):
         '''
-        pull data from the user's datafile
+        pull data from the user's datafile and update user's symptoms
 
         parameters
         ----------
@@ -45,15 +46,17 @@ class User:
         None
         '''
 
-        #TODO: implement warnings for invalid datapaths
+        # warnings for invalid datapaths
+        if os.path.exists(datapath):
+            current_symptoms = [symp.name for symp in self.symptoms]
+            self.data = pd.read_csv(datapath)
 
-        current_symptoms = [symp.name for symp in self.symptoms]
-        self.data = pd.read_csv(datapath)
-
-        # update symptoms for new ones
-        for symp in self.data.columns:
-            if symp not in current_symptoms:
-                self.symptoms.append(Symptom(symp))
+            # update symptoms for new ones
+            for symp in self.data.columns:
+                if symp not in current_symptoms:
+                    self.symptoms.append(Symptom(symp))
+        else:
+            print('invalid datapath, could not pull user data')
 
     def corr(self, symp1, symp2):
         '''
