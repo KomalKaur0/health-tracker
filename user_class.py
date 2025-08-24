@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import numpy as np
 from symptom_class import Symptom
 
 class User:
@@ -25,10 +26,15 @@ class User:
         None
         '''
 
-        #TODO: implement checking valid data type for symptoms list and data
-
         self.name = name
+
+        # checking valid data type for symptoms list and data
+        assert all(isinstance(symp, Symptom) for symp in symptoms)
+        
         self.symptoms = symptoms
+            
+        assert isinstance(data, pd.DataFrame)
+
         self.data = data
         
     def pull_data(self, datapath):
