@@ -1,3 +1,3 @@
-class Symptom:
-    def __init__(self, name):
-        self.name = name
+# class Symptom:
+#     def __init__(self, name):
+#         self.name = name
